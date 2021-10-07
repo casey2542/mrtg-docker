@@ -1,4 +1,4 @@
-# mrtg-docker
+# mrtg
 
 MRTG (Multi Router Traffic Grapher) in a ~~box~~ container!
 
