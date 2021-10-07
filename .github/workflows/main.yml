@@ -26,3 +26,4 @@ jobs:
           context: .
           push: true
           tags: 'latest'
+          label: 'mrtg'
