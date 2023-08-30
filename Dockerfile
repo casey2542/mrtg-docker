@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ENV TZ=America/Sao_Paulo
+ENV TZ=America/New_York
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
