@@ -7,7 +7,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get -y update && \
     apt-get -y upgrade && \
-    apt-get install -y mrtg apache2 snmp nano rrdtool librrds-perl cron
+    apt-get install -y mrtg apache2 snmp nano rrdtool librrds-perl cron iputils-ping dnsutils
 
 COPY entrypoint.sh /entrypoint.sh
 

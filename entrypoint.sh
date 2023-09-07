@@ -123,6 +123,7 @@ create_config_file() {
 
 create_index_files() {
     if [ -n "${HOSTS}" ]; then
+        hosts=$(echo ${HOSTS} | tr '[,;]' ' ')
         for asset in ${hosts}; do
             read -r COMMUNITY HOST VERSION PORT < <(echo ${asset} | sed -e 's/:/ /g')
             NAME=${HOST}
@@ -130,7 +131,7 @@ create_index_files() {
             NAME_UPPER=$(echo $NAME | tr '[:lower:]' '[:upper:]')
             echo "Indexing $NAME_UPPER"
             echo "" >> ${MRTGCFG}
-            # cat ${MRTGDIR}/conf.d/$NAME_UPPER.cfg >> ${MRTGCFG}
+            cat ${MRTGDIR}/conf.d/$NAME_UPPER.cfg >> ${MRTGCFG}
             [[ ! -f "${WEBDIR}/${NAME_UPPER}.html" ]] && /usr/bin/indexmaker \
                 --output ${WEBDIR}/${NAME_UPPER}.html \
                 --columns=3 \
@@ -148,8 +149,8 @@ echo "ServerName ${HOSTNAME}.${DOMAINNAME}" >> /etc/apache2/apache2.conf
 echo "Creating Directories"
 create_dirs
 
-echo "Creating Target Configs"
-create_target_configs
+# echo "Creating Target Configs"
+# create_target_configs
 
 echo "Starting webserver"
 service apache2 start
@@ -171,9 +172,9 @@ sleep 2
 
 indexmaker /etc/mrtg.cfg > /var/www/html/index.html
 
-echo "Creating cronjob to Refresh Configs Every 24hrs"
-crontab - l | { cat; echo "55 1 * * * rm /etc/mrtg.cfg"; } | crontab -
-crontab - l | { cat; echo "0 2 * * * /entrypoint.sh refresh_target_configs"; } | crontab -
+# echo "Creating cronjob to Refresh Configs Every 24hrs"
+# crontab - l | { cat; echo "55 1 * * * rm /etc/mrtg.cfg"; } | crontab -
+# crontab - l | { cat; echo "0 2 * * * /entrypoint.sh refresh_target_configs"; } | crontab -
 
 echo "Start polling cycle on $TARGETCOUNT total devices"
 
